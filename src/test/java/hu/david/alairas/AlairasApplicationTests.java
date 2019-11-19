@@ -1,10 +1,10 @@
-package hu.david.nevjegy;
+package hu.david.alairas;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class NevjegyApplicationTests {
+class AlairasApplicationTests {
 
 	@Test
 	void contextLoads() {

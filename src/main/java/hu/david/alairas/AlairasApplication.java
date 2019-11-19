@@ -1,4 +1,4 @@
-package hu.david.nevjegy;
+package hu.david.alairas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

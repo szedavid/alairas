@@ -16,6 +16,7 @@ public class Alairas {
   private Integer id;
 
   @Size(max = 32)
+  @Column(nullable = false)
   private String vezeteknev;
 
   @Size(max = 16)
@@ -23,7 +24,6 @@ public class Alairas {
   private String keresztnev_1;
 
   @Size(max = 16)
-  @Column(nullable = false)
   private String keresztnev_2;
 
   @Column(nullable = false)

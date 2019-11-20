@@ -3,8 +3,11 @@ package hu.david.alairas.entity;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,12 +25,13 @@ public class Alairas {
   @Column(nullable = false)
   private String vezeteknev;
 
-  @Size(max = 16)
-  @Column(nullable = false)
-  private String keresztnev;
+  @ManyToOne(fetch= FetchType.LAZY)
+  @JoinColumn(name="UTONEV_ID", nullable = false)
+  private Utonev utonev;
 
-  @Size(max = 16)
-  private String keresztnev_2;
+  @ManyToOne(fetch= FetchType.LAZY)
+  @JoinColumn(name="UTONEV_2_ID")
+  private Utonev utonev_2;
 
   @Column(nullable = false)
   private Boolean nemeNo;
@@ -56,24 +60,28 @@ public class Alairas {
     this.vezeteknev = vezeteknev;
   }
 
-  public String getKeresztnev() {
-    return keresztnev;
+  public Utonev getUtonev() {
+    return utonev;
   }
 
-  public void setKeresztnev(String keresztnev) {
-    this.keresztnev = keresztnev;
+  public void setUtonev(Utonev utonev) {
+    this.utonev = utonev;
   }
 
-  public String getKeresztnev_2() {
-    return keresztnev_2;
+  public Utonev getUtonev_2() {
+    return utonev_2;
   }
 
-  public void setKeresztnev_2(String keresztnev_2) {
-    this.keresztnev_2 = keresztnev_2;
+  public void setUtonev_2(Utonev utonev_2) {
+    this.utonev_2 = utonev_2;
   }
 
-  public Boolean getNem() {
-    return nem;
+  public Boolean getNemeNo() {
+    return nemeNo;
+  }
+
+  public void setNemeNo(Boolean nemeNo) {
+    this.nemeNo = nemeNo;
   }
 
   public Date getLetrehozva() {
@@ -94,6 +102,6 @@ public class Alairas {
 
   @Override
   public String toString() {
-    return vezeteknev + " " + keresztnev + (keresztnev_2 != null ? (" " + keresztnev_2) : "");
+    return vezeteknev + " " + utonev + (utonev_2 != null ? (" " + utonev_2) : "");
   }
 }

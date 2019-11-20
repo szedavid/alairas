@@ -23,10 +23,10 @@
   <tr th:if="${alairasok.empty}">
     <td colspan="2"> Nincsenek aláírások</td>
   </tr>
-  <tr th:each="alairas : ${alairasok}">
+  <tr th:classappend="${alairas.nemeNo} ? table-danger" th:each="alairas : ${alairasok}">
     <td><span th:text="${alairas.vezeteknev}"></span></td>
-    <td><span th:text="${alairas.keresztnev}"></span></td>
-    <td><span th:text="${alairas.keresztnev_2}"></span></td>
+    <td><span th:text="${alairas.utonev}"></span></td>
+    <td><span th:text="${alairas.utonev_2}"></span></td>
     <td><input type="checkbox" th:checked="${alairas.nemeNo}" disabled></td>
     <td><a class="btn btn-primary btn-sm" th:href="@{/szerkesztes/} + ${alairas.id}">Szerkesztés</a></td>
   </tr>

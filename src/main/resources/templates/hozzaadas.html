@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Aláírás hozzáadása</title>
+  <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<a class="btn btn-primary fooldalra" href="/" role="button">Vissza a főoldalra</a>
+<form method="post" action="/hozzaadas">
+  <h2>Új aláírás felvétele</h2>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Vezetéknév</th>
+      <th>Keresztnév</th>
+      <th>Második keresztnév</th>
+      <th>Nő</th>
+      <th>Mentés</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><input type="text" name="vezeteknev" required="required"></td>
+      <td><input type="text" name="keresztnev" required="required"></td>
+      <td><input type="text" name="keresztnev_2"></td>
+      <td><input type="checkbox" name="nemeNo"></td>
+      <td><button class="btn btn-success btn-sm" type="submit">Mentés</button></td>
+    </tr>
+    </tbody>
+  </table>
+
+
+</form>
+
+</body>
+</html>

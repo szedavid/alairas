@@ -15,25 +15,13 @@ public class AlairasController {
   private AlairasService alairasService;
 
   @Autowired
-  public AlairasController(AlairasService alairasService){
+  public AlairasController(AlairasService alairasService) {
     this.alairasService = alairasService;
   }
 
-  @GetMapping("/alairas")
-  @ResponseBody
-  public String getHelloWorld() {
-    List<Alairas> list = alairasService.findAll();
-
-    StringBuilder sb = new StringBuilder("<p>Felhasználók:</p>");
-    for (Alairas alairas : list) {
-      sb.append("<br>");
-      sb.append(alairas.getVezeteknev()).append(" ").append(alairas.getKeresztnev_1());
-      if(!StringUtils.isEmpty(alairas.getKeresztnev_2())){
-        sb.append(" ").append(alairas.getKeresztnev_2());
-      }
-      sb.append("\n");
-    }
-
-    return sb.toString();
+  @GetMapping("/")
+  public String getAlairasok(Model model) {
+    model.addAttribute("alairasok", alairasService.findAll());
+    return "alairasok"; // ez a html template jelenjen meg
   }
 }

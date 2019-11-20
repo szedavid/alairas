@@ -1,0 +1,17 @@
+body {
+  padding: 20px;
+}
+table {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+th, td {
+  padding: 5px;
+}
+button {
+  margin: 5px;
+}
+
+.fooldalra {
+  margin-bottom: 20px;
+}

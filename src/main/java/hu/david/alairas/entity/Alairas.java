@@ -1,10 +1,13 @@
 package hu.david.alairas.entity;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -21,13 +24,21 @@ public class Alairas {
 
   @Size(max = 16)
   @Column(nullable = false)
-  private String keresztnev_1;
+  private String keresztnev;
 
   @Size(max = 16)
   private String keresztnev_2;
 
   @Column(nullable = false)
-  private Boolean nem;
+  private Boolean nemeNo;
+
+  @Temporal(TemporalType.DATE)
+  @Column(nullable = false)
+  private Date letrehozva;
+
+  @Temporal(TemporalType.DATE)
+  @Column
+  private Date modositva;
 
   public Integer getId() {
     return id;
@@ -45,12 +56,12 @@ public class Alairas {
     this.vezeteknev = vezeteknev;
   }
 
-  public String getKeresztnev_1() {
-    return keresztnev_1;
+  public String getKeresztnev() {
+    return keresztnev;
   }
 
-  public void setKeresztnev_1(String keresztnev_1) {
-    this.keresztnev_1 = keresztnev_1;
+  public void setKeresztnev(String keresztnev) {
+    this.keresztnev = keresztnev;
   }
 
   public String getKeresztnev_2() {
@@ -65,7 +76,24 @@ public class Alairas {
     return nem;
   }
 
-  public void setNem(Boolean nem) {
-    this.nem = nem;
+  public Date getLetrehozva() {
+    return letrehozva;
+  }
+
+  public void setLetrehozva(Date letrehozva) {
+    this.letrehozva = letrehozva;
+  }
+
+  public Date getModositva() {
+    return modositva;
+  }
+
+  public void setModositva(Date modositva) {
+    this.modositva = modositva;
+  }
+
+  @Override
+  public String toString() {
+    return vezeteknev + " " + keresztnev + (keresztnev_2 != null ? (" " + keresztnev_2) : "");
   }
 }

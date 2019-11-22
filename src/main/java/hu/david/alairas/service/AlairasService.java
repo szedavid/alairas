@@ -28,23 +28,23 @@ public class AlairasService {
     return alairasRepository.findAll();
   }
 
-  public Alairas addOne(String vezeteknev, Integer keresztnevId, Integer keresztnev_2Id, Boolean nemeNo) {
+  public Alairas addOne(String vezeteknev, Integer utonevId, Integer utonev_2Id, Boolean nemeNo) {
     Alairas alairas = new Alairas();
     alairas.setVezeteknev(vezeteknev);
-    alairas.setUtonev(findUtonev(keresztnevId));
-    if (!StringUtils.isEmpty(keresztnev_2Id)) {
-      alairas.setUtonev_2(findUtonev(keresztnev_2Id));
+    alairas.setUtonev(findUtonev(utonevId));
+    if (!StringUtils.isEmpty(utonev_2Id)) {
+      alairas.setUtonev_2(findUtonev(utonev_2Id));
     }
     alairas.setNemeNo(nemeNo != null && nemeNo);
     alairas.setLetrehozva(new Date());
     return alairasRepository.save(alairas);
   }
 
-  public Alairas update(Alairas alairas, String vezeteknev, Integer keresztnevId, Integer keresztnev_2Id, Boolean nemeNo) {
+  public Alairas update(Alairas alairas, String vezeteknev, Integer utonevId, Integer utonev_2Id, Boolean nemeNo) {
     alairas.setVezeteknev(vezeteknev);
-    alairas.setUtonev(findUtonev(keresztnevId));
-    if (!StringUtils.isEmpty(keresztnev_2Id)) {
-      alairas.setUtonev_2(findUtonev(keresztnev_2Id));
+    alairas.setUtonev(findUtonev(utonevId));
+    if (!StringUtils.isEmpty(utonev_2Id)) {
+      alairas.setUtonev_2(findUtonev(utonev_2Id));
     } else {
       alairas.setUtonev_2(null);
     }

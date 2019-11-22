@@ -24,20 +24,30 @@
     <tbody>
     <tr>
       <td><input type="text" name="vezeteknev" required="required"></td>
-      <td><input type="text" name="utonevId" required="required"></td>
-      <td><input type="text" name="utonev_2Id"></td>
+
+      <td>
+        <select style="width: 100%" name="utonev_Id">
+          <option th:value="${utonev.id}" th:each="utonev : ${utonevek}" th:text="${utonev.nev}"
+                  required="required"></option>
+        </select>
+      </td>
+
+      <td>
+        <select style="width: 100%" name="utonev_2Id">
+          <option th:value="${utonev.id}" th:each="utonev : ${utonevek}" th:text="${utonev.nev}"></option>
+        </select>
+      </td>
+
       <td><input type="checkbox" name="nemeNo"></td>
-      <td><button class="btn btn-success btn-sm" type="submit">Mentés</button></td>
+      <td>
+        <button class="btn btn-success btn-sm" type="submit">Mentés</button>
+      </td>
     </tr>
     </tbody>
   </table>
 
 
-
-
-<!--  jquery autocomplete-->
-
-
+  <!--  jquery autocomplete-->
 
 
 </form>

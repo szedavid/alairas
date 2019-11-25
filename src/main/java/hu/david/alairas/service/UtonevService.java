@@ -1,6 +1,5 @@
 package hu.david.alairas.service;
 
-import hu.david.alairas.entity.Alairas;
 import hu.david.alairas.entity.Utonev;
 import hu.david.alairas.repository.UtonevRepository;
 import java.util.List;

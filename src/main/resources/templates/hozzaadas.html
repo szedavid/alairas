@@ -18,15 +18,25 @@
       <th>Keresztnév</th>
       <th>Második keresztnév</th>
       <th>Nő</th>
+      <th>Megjegyzés</th>
       <th>Mentés</th>
     </tr>
     </thead>
     <tbody>
+
+
+<!--    <datalist id="utonevek">-->
+<!--      <option></option>-->
+<!--      <option th:data-value="${utonev.id}" th:each="utonev : ${utonevek}" th:text="${utonev.nev}"-->
+<!--              required="required"></option>-->
+<!--    </datalist>-->
+
+
     <tr>
       <td><input type="text" name="vezeteknev" required="required"></td>
 
       <td>
-        <select style="width: 100%" name="utonev_Id">
+        <select style="width: 100%" name="utonevId">
           <option th:value="${utonev.id}" th:each="utonev : ${utonevek}" th:text="${utonev.nev}"
                   required="required"></option>
         </select>
@@ -34,11 +44,16 @@
 
       <td>
         <select style="width: 100%" name="utonev_2Id">
+          <option></option>
           <option th:value="${utonev.id}" th:each="utonev : ${utonevek}" th:text="${utonev.nev}"></option>
         </select>
+
+<!--        <input style="width: 100%" list="utonevek" name="utonev_2Id"/>-->
+
       </td>
 
       <td><input type="checkbox" name="nemeNo"></td>
+      <td><input type="text" name="megjegyzes"></td>
       <td>
         <button class="btn btn-success btn-sm" type="submit">Mentés</button>
       </td>

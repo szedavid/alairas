@@ -36,6 +36,9 @@ public class Alairas {
   @Column(nullable = false)
   private Boolean nemeNo;
 
+  @Size(max = 500)
+  private String megjegyzes;
+
   @Temporal(TemporalType.DATE)
   @Column(nullable = false)
   private Date letrehozva;
@@ -98,6 +101,14 @@ public class Alairas {
 
   public void setModositva(Date modositva) {
     this.modositva = modositva;
+  }
+
+  public String getMegjegyzes() {
+    return megjegyzes;
+  }
+
+  public void setMegjegyzes(String megjegyzes) {
+    this.megjegyzes = megjegyzes;
   }
 
   @Override

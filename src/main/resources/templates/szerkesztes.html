@@ -17,6 +17,7 @@
       <th>Keresztnév</th>
       <th>Második keresztnév</th>
       <th>Nő</th>
+      <th>Megjegyzés</th>
       <th>Mentés</th>
     </tr>
     </thead>
@@ -25,7 +26,7 @@
       <td><input type="text" th:value="${alairas.vezeteknev}" name="vezeteknev" required="required"></td>
 
       <td>
-        <select style="width: 100%" name="utonev_Id" >
+        <select style="width: 100%" name="utonevId" >
           <option th:value="${utonev.id}" th:each="utonev : ${utonevek}" th:text="${utonev.nev}"
                   required="required"
                   th:selected="(${utonev.id} == *{alairas.utonev.id})">
@@ -34,15 +35,33 @@
       </td>
 
       <td>
-        <select style="width: 100%" name="utonev_2Id" >
+        <select style="width: 100%" name="utonev_2Id">
+          <option></option>
           <option th:value="${utonev.id}" th:each="utonev : ${utonevek}" th:text="${utonev.nev}"
-                  th:selected="(${utonev.id} == *{alairas.utonev_2.id})">
+                  th:selected="(${utonev.id} == *{alairas.utonev_2?.id})">
           </option>
         </select>
       </td>
 
       <td><input type="checkbox" name="nemeNo" th:checked="${alairas.nemeNo}"></td>
+      <td><input type="text" name="megjegyzes" th:text="${utonev.megjegyzes}"></td>
       <td><button class="btn btn-success btn-sm" type="submit">Mentés</button></td>
+    </tr>
+
+    <tr th:if="${hasonloNevek}">
+      <td class="text-center text-danger font-weight-bold" colspan="5">
+        <h3>Hasonló nevek:</h3>
+      </td>
+    </tr>
+    <tr th:classappend="${hasonlo.nemeNo} ? table-danger" th:each="hasonlo : ${hasonloNevek}">
+      <td><span th:text="${hasonlo.vezeteknev}"></span></td>
+      <td><span th:text="${hasonlo.utonev}"></span></td>
+      <td><span th:text="${hasonlo.utonev_2}"></span></td>
+      <td><input type="checkbox" th:checked="${hasonlo.nemeNo}" disabled></td>
+      <td><a class="btn btn-primary btn-sm" th:href="@{/szerkesztes/} + ${hasonlo.id}">Szerkesztés</a>
+        <a class="btn btn-danger btn-sm" th:href="@{/torles/} + ${alairas.id}"
+           onclick="return confirm('Biztosan törlöd az aláírást?');">Törlés</a>
+      </td>
     </tr>
     </tbody>
   </table>

@@ -19,9 +19,7 @@ public class AlairasService {
   private UtonevRepository utonevRepository;
 
   @Autowired
-  public AlairasService(AlairasRepository alairasRepository
-      , UtonevRepository utonevRepository
-  ) {
+  public AlairasService(AlairasRepository alairasRepository, UtonevRepository utonevRepository) {
     this.alairasRepository = alairasRepository;
     this.utonevRepository = utonevRepository;
   }
@@ -38,7 +36,8 @@ public class AlairasService {
     return alairasRepository.findAll();
   }
 
-  public Alairas addOne(String vezeteknev, Integer utonevId, Integer utonev_2Id, Boolean nemeNo) {
+  public Alairas addOne(String vezeteknev, Integer utonevId, Integer utonev_2Id, Boolean nemeNo,
+      String megjegyzes) {
     Alairas alairas = new Alairas();
     alairas.setVezeteknev(vezeteknev);
     alairas.setUtonev(findUtonev(utonevId));
@@ -46,11 +45,13 @@ public class AlairasService {
       alairas.setUtonev_2(findUtonev(utonev_2Id));
     }
     alairas.setNemeNo(nemeNo != null && nemeNo);
+    alairas.setMegjegyzes(megjegyzes);
     alairas.setLetrehozva(new Date());
     return alairasRepository.save(alairas);
   }
 
-  public Alairas update(Alairas alairas, String vezeteknev, Integer utonevId, Integer utonev_2Id, Boolean nemeNo) {
+  public Alairas update(Alairas alairas, String vezeteknev, Integer utonevId, Integer utonev_2Id,
+      Boolean nemeNo, String megjegyzes) {
     alairas.setVezeteknev(vezeteknev);
     alairas.setUtonev(findUtonev(utonevId));
     if (!StringUtils.isEmpty(utonev_2Id)) {
@@ -59,13 +60,28 @@ public class AlairasService {
       alairas.setUtonev_2(null);
     }
     alairas.setNemeNo(nemeNo != null && nemeNo);
+    alairas.setMegjegyzes(megjegyzes);
     alairas.setModositva(new Date());
     return alairasRepository.save(alairas);
   }
 
-  private Utonev findUtonev(Integer id){
-    return utonevRepository.findById(id).orElseThrow(
-        () -> new ResourceNotFoundException("Utónév azonosító nem található: " + id)
-    );
+  private Utonev findUtonev(Integer id) {
+    return utonevRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Utónév azonosító nem található: " + id));
+  }
+
+  public List<Alairas> findSimilar(Alairas alairas) {
+    List<Alairas> alairasList = alairasRepository
+        .findByVezeteknevAndUtonevId(alairas.getVezeteknev(), alairas.getUtonev().getId());
+    alairasList.remove(alairas);
+    return alairasList;
+  }
+
+  public void deleteOne(Integer id) {
+    Alairas alairas = findOne(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Aláírás azonosító nem található: " + id));
+    if (alairas != null) {
+      alairasRepository.delete(alairas);
+    }
   }
 }

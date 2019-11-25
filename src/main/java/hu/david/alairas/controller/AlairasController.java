@@ -3,10 +3,12 @@ package hu.david.alairas.controller;
 import hu.david.alairas.entity.Alairas;
 import hu.david.alairas.service.AlairasService;
 import hu.david.alairas.service.UtonevService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,9 +21,7 @@ public class AlairasController {
   private UtonevService utonevService;
 
   @Autowired
-  public AlairasController(AlairasService alairasService
-      , UtonevService utonevService
-  ) {
+  public AlairasController(AlairasService alairasService, UtonevService utonevService) {
     this.alairasService = alairasService;
     this.utonevService = utonevService;
   }
@@ -38,7 +38,19 @@ public class AlairasController {
         .orElseThrow(() -> new ResourceNotFoundException("Aláírás azonosító nem található: " + id));
 
     model.addAttribute("alairas", alairas);
+    List<Alairas> hasonloNevek = alairasService.findSimilar(alairas);
+    if (hasonloNevek.size() > 0) {
+      model.addAttribute("hasonloNevek", hasonloNevek);
+    }
     return "alairas"; // ez a html template jelenjen meg
+  }
+
+  // todo DeleteMapping-al
+  @GetMapping("/torles/{id}")
+  public String deleteAlairas(@PathVariable Integer id, Model model) {
+    alairasService.deleteOne(id);
+    model.addAttribute("alairasok", alairasService.findAll());
+    return "alairasok"; // ez a html template jelenjen meg
   }
 
   @GetMapping("/hozzaadas")
@@ -49,9 +61,10 @@ public class AlairasController {
 
   @PostMapping("/hozzaadas")
   public String hozzaadas(@RequestParam String vezeteknev, @RequestParam Integer utonevId,
-      @RequestParam(required = false) Integer utonev_2Id,
-      @RequestParam(required = false) Boolean nemeNo, Model model) {
-    Alairas alairas = alairasService.addOne(vezeteknev, utonevId, utonev_2Id, nemeNo);
+      @RequestParam(required = false) Integer utonev2Id,
+      @RequestParam(required = false) Boolean nemeNo,
+      @RequestParam(required = false) String megjegyzes, Model model) {
+    Alairas alairas = alairasService.addOne(vezeteknev, utonevId, utonev2Id, nemeNo, megjegyzes);
     return getAlairas(alairas.getId(), model);
   }
 
@@ -62,17 +75,25 @@ public class AlairasController {
 
     model.addAttribute("alairas", alairas);
     model.addAttribute("utonevek", utonevService.findAll());
+
+    List<Alairas> hasonloNevek = alairasService.findSimilar(alairas);
+    if (hasonloNevek.size() > 0) {
+      model.addAttribute("hasonloNevek", hasonloNevek);
+    }
+
     return "szerkesztes";
   }
 
   @PostMapping("/szerkesztes/{id}")
-  public String szerkesztes(@PathVariable Integer id, @RequestParam String vezeteknev, @RequestParam Integer utonevId,
-      @RequestParam(required = false) Integer utonev_2Id,
-      @RequestParam(required = false) Boolean nemeNo, Model model) {
+  public String szerkesztes(@PathVariable Integer id, @RequestParam String vezeteknev,
+      @RequestParam Integer utonevId, @RequestParam(required = false) Integer utonev_2Id,
+      @RequestParam(required = false) Boolean nemeNo,
+      @RequestParam(required = false) String megjegyzes,
+      Model model) {
     Alairas alairas = alairasService.findOne(id)
         .orElseThrow(() -> new ResourceNotFoundException("Aláírás azonosító nem található: " + id));
 
-    alairasService.update(alairas, vezeteknev, utonevId, utonev_2Id, nemeNo);
+    alairasService.update(alairas, vezeteknev, utonevId, utonev_2Id, nemeNo, megjegyzes);
     return getAlairas(alairas.getId(), model);
   }
 }

@@ -1,8 +1,12 @@
 package hu.david.alairas.service;
 
 import hu.david.alairas.entity.Alairas;
+import hu.david.alairas.entity.Utonev;
 import hu.david.alairas.repository.AlairasRepository;
+import hu.david.alairas.repository.UtonevRepository;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -15,7 +19,9 @@ public class AlairasService {
   private UtonevRepository utonevRepository;
 
   @Autowired
-  public AlairasService(AlairasRepository alairasRepository, UtonevRepository utonevRepository) {
+  public AlairasService(AlairasRepository alairasRepository
+      , UtonevRepository utonevRepository
+  ) {
     this.alairasRepository = alairasRepository;
     this.utonevRepository = utonevRepository;
   }
@@ -24,7 +30,11 @@ public class AlairasService {
     return alairasRepository.findAll().size();
   }
 
-  public List<Alairas> findAll(){
+  public Optional<Alairas> findOne(Integer id) {
+    return alairasRepository.findById(id);
+  }
+
+  public List<Alairas> findAll() {
     return alairasRepository.findAll();
   }
 

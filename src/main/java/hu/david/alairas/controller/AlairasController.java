@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AlairasController {
 
   private AlairasService alairasService;
-  private UtonevService utonevService;
+//  private UtonevService utonevService;
 
   @Autowired
-  public AlairasController(AlairasService alairasService, UtonevService utonevService) {
+  public AlairasController(AlairasService alairasService
+//      , UtonevService utonevService
+  ) {
     this.alairasService = alairasService;
-    this.utonevService = utonevService;
+//    this.utonevService = utonevService;
   }
 
   @GetMapping("/")

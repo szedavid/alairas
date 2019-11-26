@@ -26,10 +26,10 @@
   </tr>
   </thead>
   <tbody>
-  <tr th:if="${alairasok.empty}">
+  <tr th:if="${alairasPage.empty}">
     <td colspan="2"> Nincsenek aláírások</td>
   </tr>
-  <tr th:classappend="${alairas.nemeNo} ? table-danger" th:each="alairas : ${alairasok}">
+  <tr th:classappend="${alairas.nemeNo} ? table-danger" th:each="alairas : ${alairasPage.content}">
     <td><span th:text="${alairas.vezeteknev}"></span></td>
     <td><span th:text="${alairas.utonev}"></span></td>
     <td><span th:text="${alairas.utonev_2}"></span></td>
@@ -37,10 +37,20 @@
     <td>
       <a class="btn btn-primary btn-sm" th:href="@{/szerkesztes/} + ${alairas.id}">Szerkesztés</a>
       <a class="btn btn-danger btn-sm" th:href="@{/torles/} + ${alairas.id}"
-           onclick="return confirm('Biztosan törlöd az aláírást?');">Törlés</a>
+         onclick="return confirm('Biztosan törlöd az aláírást?');">Törlés</a>
     </td>
   </tr>
   </tbody>
 </table>
+<div class="row mr-auto">
+  <div class="col-auto"><h3>Oldalak:</h3></div>
+  <div th:if="${alairasPage.totalPages > 0}"
+       class="pagination col-auto font-weight-bold align-middle"
+       th:each="pageNumber : ${pageNumbers}">
+        <a th:href="@{/(size=${alairasPage.size}, page=${pageNumber})}"
+           th:text=${pageNumber}
+           th:class="${pageNumber==alairasPage.number + 1} ? active"></a>
+  </div>
+</div>
 </body>
 </html>

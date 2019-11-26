@@ -22,7 +22,7 @@
     <th>Keresztnév</th>
     <th>Második keresztnév</th>
     <th>Nő</th>
-    <th>Műveletek</th>
+    <th class="fit">Műveletek</th>
   </tr>
   </thead>
   <tbody>
@@ -34,7 +34,7 @@
     <td><span th:text="${alairas.utonev}"></span></td>
     <td><span th:text="${alairas.utonev_2}"></span></td>
     <td><input type="checkbox" th:checked="${alairas.nemeNo}" disabled></td>
-    <td>
+    <td class="fit">
       <a class="btn btn-primary btn-sm" th:href="@{/szerkesztes/} + ${alairas.id}">Szerkesztés</a>
       <a class="btn btn-danger btn-sm" th:href="@{/torles/} + ${alairas.id}"
          onclick="return confirm('Biztosan törlöd az aláírást?');">Törlés</a>

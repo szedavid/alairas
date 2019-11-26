@@ -18,7 +18,7 @@
       <th>Második keresztnév</th>
       <th>Nő</th>
       <th>Megjegyzés</th>
-      <th>Mentés</th>
+      <th class="fit">Mentés</th>
     </tr>
     </thead>
     <tbody>
@@ -58,7 +58,7 @@
       <td><span th:text="${hasonlo.utonev}"></span></td>
       <td><span th:text="${hasonlo.utonev_2}"></span></td>
       <td><input type="checkbox" th:checked="${hasonlo.nemeNo}" disabled></td>
-      <td><a class="btn btn-primary btn-sm" th:href="@{/szerkesztes/} + ${hasonlo.id}">Szerkesztés</a>
+      <td class="fit"><a class="btn btn-primary btn-sm" th:href="@{/szerkesztes/} + ${hasonlo.id}">Szerkesztés</a>
         <a class="btn btn-danger btn-sm" th:href="@{/torles/} + ${alairas.id}"
            onclick="return confirm('Biztosan törlöd az aláírást?');">Törlés</a>
       </td>

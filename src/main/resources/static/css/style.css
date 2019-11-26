@@ -5,11 +5,12 @@ table {
   margin-top: 20px;
   margin-bottom: 20px;
 }
-th, td {
+.table th, .table td {
   padding: 5px;
 }
-button {
-  margin: 5px;
+.table th.fit, .table td.fit {
+  white-space: nowrap;
+  width: 1%;
 }
 
 .fooldalra {

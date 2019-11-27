@@ -68,7 +68,7 @@ public class AlairasController {
   @GetMapping("/torles/{id}")
   public String deleteAlairas(@PathVariable Integer id, Model model) {
     alairasService.deleteOne(id);
-    model.addAttribute("alairasok", alairasService.findAll());
+    model.addAttribute("alairasok", alairasService.findAllOrderByVezeteknev());
     return "alairasok"; // ez a html template jelenjen meg
   }
 
@@ -79,11 +79,15 @@ public class AlairasController {
   }
 
   @PostMapping("/hozzaadas")
-  public String hozzaadas(@RequestParam String vezeteknev, @RequestParam Integer utonevId,
+  public String hozzaadas(
+      @RequestParam String vezeteknev,
+      @RequestParam Integer utonevId,
       @RequestParam(required = false) Integer utonev2Id,
       @RequestParam(required = false) Boolean nemeNo,
-      @RequestParam(required = false) String megjegyzes, Model model) {
-    Alairas alairas = alairasService.addOne(vezeteknev, utonevId, utonev2Id, nemeNo, megjegyzes);
+      @RequestParam(required = false) String infoLink,
+      @RequestParam(required = false) String megjegyzes,
+      Model model) {
+    Alairas alairas = alairasService.addOne(vezeteknev, utonevId, utonev2Id, nemeNo, infoLink, megjegyzes);
     return getAlairas(alairas.getId(), model);
   }
 
@@ -104,15 +108,19 @@ public class AlairasController {
   }
 
   @PostMapping("/szerkesztes/{id}")
-  public String szerkesztes(@PathVariable Integer id, @RequestParam String vezeteknev,
-      @RequestParam Integer utonevId, @RequestParam(required = false) Integer utonev_2Id,
+  public String szerkesztes(
+      @PathVariable Integer id,
+      @RequestParam String vezeteknev,
+      @RequestParam Integer utonevId,
+      @RequestParam(required = false) Integer utonev_2Id,
       @RequestParam(required = false) Boolean nemeNo,
+      @RequestParam(required = false) String infoLink,
       @RequestParam(required = false) String megjegyzes,
       Model model) {
     Alairas alairas = alairasService.findOne(id)
         .orElseThrow(() -> new ResourceNotFoundException("Aláírás azonosító nem található: " + id));
 
-    alairasService.update(alairas, vezeteknev, utonevId, utonev_2Id, nemeNo, megjegyzes);
+    alairasService.update(alairas, vezeteknev, utonevId, utonev_2Id, nemeNo, infoLink, megjegyzes);
     return getAlairas(alairas.getId(), model);
   }
 }

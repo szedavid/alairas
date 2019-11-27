@@ -15,8 +15,9 @@
     <tr>
       <th>Vezetéknév</th>
       <th>Keresztnév</th>
-      <th>Második keresztnév</th>
-      <th>Nő</th>
+      <th>2. keresztnév</th>
+      <th class="fit">Nő</th>
+      <th>Ki ő?</th>
       <th>Megjegyzés</th>
       <th class="fit">Mentés</th>
     </tr>
@@ -43,38 +44,42 @@
         </select>
       </td>
 
-      <td><input type="checkbox" name="nemeNo" th:checked="${alairas.nemeNo}"></td>
-      <td><input type="text" name="megjegyzes" th:value="${alairas.megjegyzes}"></td>
+      <td class="fit"><input type="checkbox" name="nemeNo" th:checked="${alairas.nemeNo}"></td>
+      <td><input style="width: 100%" type="text" name="infoLink" th:value="${alairas.infoLink}"></td>
+      <td><input style="width: 100%" type="text" name="megjegyzes" th:value="${alairas.megjegyzes}"></td>
       <td><button class="btn btn-success btn-sm" type="submit">Mentés</button></td>
-    </tr>
-
-    <tr th:if="${hasonloNevek}">
-      <td class="text-center text-danger font-weight-bold" colspan="5">
-        <h3>Hasonló nevek:</h3>
-      </td>
-    </tr>
-    <tr th:classappend="${hasonlo.nemeNo} ? table-danger" th:each="hasonlo : ${hasonloNevek}">
-      <td><span th:text="${hasonlo.vezeteknev}"></span></td>
-      <td><span th:text="${hasonlo.utonev}"></span></td>
-      <td><span th:text="${hasonlo.utonev_2}"></span></td>
-      <td><input type="checkbox" th:checked="${hasonlo.nemeNo}" disabled></td>
-      <td class="fit"><a class="btn btn-primary btn-sm" th:href="@{/szerkesztes/} + ${hasonlo.id}">Szerkesztés</a>
-        <a class="btn btn-danger btn-sm" th:href="@{/torles/} + ${alairas.id}"
-           onclick="return confirm('Biztosan törlöd az aláírást?');">Törlés</a>
-      </td>
     </tr>
     </tbody>
   </table>
-
-
-
-  <!--  jquery autocomplete-->
-
-
-
-
-
 </form>
 
+<h3 class="text-danger" th:if="${hasonloNevek}">Hasonló nevek:</h3>
+<table th:if="${hasonloNevek}" class="table table-bordered">
+  <thead>
+  <tr>
+    <th>Vezetéknév</th>
+    <th>Keresztnév</th>
+    <th class="fit">2. keresztnév</th>
+    <th class="fit">Nő</th>
+    <th class="fit">Ki ő?</th>
+    <th>Megjegyzés</th>
+    <th class="fit">Műveletek</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:classappend="${hasonlo.nemeNo} ? table-danger" th:each="hasonlo : ${hasonloNevek}">
+    <td><span th:text="${hasonlo.vezeteknev}"></span></td>
+    <td><span th:text="${hasonlo.utonev}"></span></td>
+    <td class="fit"><span th:text="${hasonlo.utonev_2}"></span></td>
+    <td><input type="checkbox" th:checked="${hasonlo.nemeNo}" disabled></td>
+    <td class="fit"><a th:if="${hasonlo.infoLink}" th:href="${hasonlo.infoLink}" target="_blank">Információ</a></td>
+    <td><span th:text="${hasonlo.megjegyzes}"></span></td>
+    <td class="fit"><a class="btn btn-primary btn-sm" th:href="@{/szerkesztes/} + ${hasonlo.id}">Szerkesztés</a>
+      <a class="btn btn-danger btn-sm" th:href="@{/torles/} + ${alairas.id}"
+         onclick="return confirm('Biztosan törlöd az aláírást?');">Törlés</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
 </body>
 </html>

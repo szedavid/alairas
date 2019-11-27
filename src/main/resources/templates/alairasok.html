@@ -20,8 +20,9 @@
   <tr>
     <th>Vezetéknév</th>
     <th>Keresztnév</th>
-    <th>Második keresztnév</th>
-    <th>Nő</th>
+    <th class="fit">2. keresztnév</th>
+    <th class="fit">Nő</th>
+    <th class="fit">Ki ő?</th>
     <th class="fit">Műveletek</th>
   </tr>
   </thead>
@@ -32,8 +33,11 @@
   <tr th:classappend="${alairas.nemeNo} ? table-danger" th:each="alairas : ${alairasPage.content}">
     <td><span th:text="${alairas.vezeteknev}"></span></td>
     <td><span th:text="${alairas.utonev}"></span></td>
-    <td><span th:text="${alairas.utonev_2}"></span></td>
-    <td><input type="checkbox" th:checked="${alairas.nemeNo}" disabled></td>
+    <td class="fit"><span th:text="${alairas.utonev_2}"></span></td>
+    <td class="fit"><input type="checkbox" th:checked="${alairas.nemeNo}" disabled></td>
+    <td class="fit">
+      <a th:if="${alairas.infoLink}" th:href="${alairas.infoLink}" target="_blank">Információ</a>
+    </td>
     <td class="fit">
       <a class="btn btn-primary btn-sm" th:href="@{/szerkesztes/} + ${alairas.id}">Szerkesztés</a>
       <a class="btn btn-danger btn-sm" th:href="@{/torles/} + ${alairas.id}"
@@ -45,11 +49,12 @@
 <div class="row mr-auto">
   <div class="col-auto"><h3>Oldalak:</h3></div>
   <div th:if="${alairasPage.totalPages > 0}"
-       class="pagination col-auto font-weight-bold align-middle"
+       class="pagination col-auto"
        th:each="pageNumber : ${pageNumbers}">
-        <a th:href="@{/(size=${alairasPage.size}, page=${pageNumber})}"
+        <a class="btn btn-primary font-weight-bold"
+           th:href="@{/(size=${alairasPage.size}, page=${pageNumber})}"
            th:text=${pageNumber}
-           th:class="${pageNumber==alairasPage.number + 1} ? active"></a>
+           th:classappend="${pageNumber==alairasPage.number + 1} ? active"></a>
   </div>
 </div>
 </body>

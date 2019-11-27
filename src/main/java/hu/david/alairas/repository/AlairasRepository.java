@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AlairasRepository extends JpaRepository<Alairas, Integer> {
-  List<Alairas> findByVezeteknevAndUtonevId(String vezeteknev, Integer utonevId);
+  List<Alairas> findByVezeteknevAndUtonevIdOrderByVezeteknev(String vezeteknev, Integer utonevId);
 }

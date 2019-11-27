@@ -11,9 +11,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "ALAIRAS")
 public class Alairas {
 
@@ -21,6 +24,7 @@ public class Alairas {
   @GeneratedValue
   private Integer id;
 
+  @NotBlank
   @Size(max = 32)
   @Column(nullable = false)
   private String vezeteknev;
@@ -36,6 +40,9 @@ public class Alairas {
   @Column(nullable = false)
   private Boolean nemeNo;
 
+  @Size(max = 256)
+  private String infoLink;
+
   @Size(max = 500)
   private String megjegyzes;
 
@@ -46,70 +53,6 @@ public class Alairas {
   @Temporal(TemporalType.DATE)
   @Column
   private Date modositva;
-
-  public Integer getId() {
-    return id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public String getVezeteknev() {
-    return vezeteknev;
-  }
-
-  public void setVezeteknev(String vezeteknev) {
-    this.vezeteknev = vezeteknev;
-  }
-
-  public Utonev getUtonev() {
-    return utonev;
-  }
-
-  public void setUtonev(Utonev utonev) {
-    this.utonev = utonev;
-  }
-
-  public Utonev getUtonev_2() {
-    return utonev_2;
-  }
-
-  public void setUtonev_2(Utonev utonev_2) {
-    this.utonev_2 = utonev_2;
-  }
-
-  public Boolean getNemeNo() {
-    return nemeNo;
-  }
-
-  public void setNemeNo(Boolean nemeNo) {
-    this.nemeNo = nemeNo;
-  }
-
-  public Date getLetrehozva() {
-    return letrehozva;
-  }
-
-  public void setLetrehozva(Date letrehozva) {
-    this.letrehozva = letrehozva;
-  }
-
-  public Date getModositva() {
-    return modositva;
-  }
-
-  public void setModositva(Date modositva) {
-    this.modositva = modositva;
-  }
-
-  public String getMegjegyzes() {
-    return megjegyzes;
-  }
-
-  public void setMegjegyzes(String megjegyzes) {
-    this.megjegyzes = megjegyzes;
-  }
 
   @Override
   public String toString() {

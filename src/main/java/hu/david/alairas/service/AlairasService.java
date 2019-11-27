@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -37,12 +38,12 @@ public class AlairasService {
     return alairasRepository.findById(id);
   }
 
-  public List<Alairas> findAll() {
-    return alairasRepository.findAll();
+  public List<Alairas> findAllOrderByVezeteknev() {
+    return alairasRepository.findAll(Sort.by("vezeteknev"));
   }
 
   public Alairas addOne(String vezeteknev, Integer utonevId, Integer utonev_2Id, Boolean nemeNo,
-      String megjegyzes) {
+      String infoLink, String megjegyzes) {
     Alairas alairas = new Alairas();
     alairas.setVezeteknev(vezeteknev);
     alairas.setUtonev(findUtonev(utonevId));
@@ -50,13 +51,18 @@ public class AlairasService {
       alairas.setUtonev_2(findUtonev(utonev_2Id));
     }
     alairas.setNemeNo(nemeNo != null && nemeNo);
+    if (!StringUtils.isEmpty(infoLink)) {
+      alairas.setInfoLink(infoLink);
+    } else {
+      alairas.setUtonev_2(null);
+    }
     alairas.setMegjegyzes(megjegyzes);
     alairas.setLetrehozva(new Date());
     return alairasRepository.save(alairas);
   }
 
   public Alairas update(Alairas alairas, String vezeteknev, Integer utonevId, Integer utonev_2Id,
-      Boolean nemeNo, String megjegyzes) {
+      Boolean nemeNo, String infoLink, String megjegyzes) {
     alairas.setVezeteknev(vezeteknev);
     alairas.setUtonev(findUtonev(utonevId));
     if (!StringUtils.isEmpty(utonev_2Id)) {
@@ -65,6 +71,11 @@ public class AlairasService {
       alairas.setUtonev_2(null);
     }
     alairas.setNemeNo(nemeNo != null && nemeNo);
+    if (!StringUtils.isEmpty(infoLink)) {
+      alairas.setInfoLink(infoLink);
+    } else {
+      alairas.setUtonev_2(null);
+    }
     alairas.setMegjegyzes(megjegyzes);
     alairas.setModositva(new Date());
     return alairasRepository.save(alairas);
@@ -77,7 +88,7 @@ public class AlairasService {
 
   public List<Alairas> findSimilar(Alairas alairas) {
     List<Alairas> alairasList = alairasRepository
-        .findByVezeteknevAndUtonevId(alairas.getVezeteknev(), alairas.getUtonev().getId());
+        .findByVezeteknevAndUtonevIdOrderByVezeteknev(alairas.getVezeteknev(), alairas.getUtonev().getId());
     alairasList.remove(alairas);
     return alairasList;
   }
@@ -92,7 +103,7 @@ public class AlairasService {
 
   // PAGINATION
   public Page<Alairas> findPaginated(Pageable pageable) {
-    List<Alairas> alairasok = findAll();
+    List<Alairas> alairasok = findAllOrderByVezeteknev();
 
     int pageSize = pageable.getPageSize();
     int currentPage = pageable.getPageNumber();

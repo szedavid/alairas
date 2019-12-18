@@ -47,7 +47,7 @@
       <td class="fit"><input type="checkbox" name="nemeNo" th:checked="${alairas.nemeNo}"></td>
       <td><input style="width: 100%" type="text" name="infoLink" th:value="${alairas.infoLink}"></td>
       <td><input style="width: 100%" type="text" name="megjegyzes" th:value="${alairas.megjegyzes}"></td>
-      <td><button class="btn btn-success btn-sm" type="submit">Mentés</button></td>
+      <td><button class="btn btn-success btn" type="submit">Mentés</button></td>
     </tr>
     </tbody>
   </table>
@@ -74,8 +74,8 @@
     <td><input type="checkbox" th:checked="${hasonlo.nemeNo}" disabled></td>
     <td class="fit"><a th:if="${hasonlo.infoLink}" th:href="${hasonlo.infoLink}" target="_blank">Információ</a></td>
     <td><span th:text="${hasonlo.megjegyzes}"></span></td>
-    <td class="fit"><a class="btn btn-primary btn-sm" th:href="@{/szerkesztes/} + ${hasonlo.id}">Szerkesztés</a>
-      <a class="btn btn-danger btn-sm" th:href="@{/torles/} + ${alairas.id}"
+    <td class="fit"><a class="btn btn-primary btn" th:href="@{/szerkesztes/} + ${hasonlo.id}">Szerkesztés</a>
+      <a class="btn btn-danger btn" th:href="@{/torles/} + ${alairas.id}"
          onclick="return confirm('Biztosan törlöd az aláírást?');">Törlés</a>
     </td>
   </tr>

@@ -29,7 +29,7 @@ public class AlairasController {
     this.utonevService = utonevService;
   }
 
-  @GetMapping("/")
+  @GetMapping("/tl")
   public String getAlairasok(
       @RequestParam("page") Optional<Integer> page,
       @RequestParam("size") Optional<Integer> size,
@@ -51,7 +51,7 @@ public class AlairasController {
     return "alairasok"; // ez a html template jelenjen meg
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("/tl/{id}")
   public String getAlairas(@PathVariable Integer id, Model model) {
     Alairas alairas = alairasService.findOne(id)
         .orElseThrow(() -> new ResourceNotFoundException("Aláírás azonosító nem található: " + id));

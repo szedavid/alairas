@@ -4,8 +4,10 @@
   <meta charset="UTF-8">
   <title>Aláírások</title>
   <link rel="stylesheet" type="text/css" href="/css/style.css"/>
-  <link rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="row">
@@ -23,6 +25,7 @@
     <th class="fit">2. keresztnév</th>
     <th class="fit">Nő</th>
     <th class="fit">Ki ő?</th>
+    <th class="fit">Megjegyzés</th>
     <th class="fit">Műveletek</th>
   </tr>
   </thead>
@@ -36,11 +39,15 @@
     <td class="fit"><span th:text="${alairas.utonev_2}"></span></td>
     <td class="fit"><input type="checkbox" th:checked="${alairas.nemeNo}" disabled></td>
     <td class="fit">
-      <a th:if="${alairas.infoLink}" th:href="${alairas.infoLink}" target="_blank">Információ</a>
+      <a th:if="${alairas.infoLink}" class="btn btn-primary" th:href="${alairas.infoLink}" target="_blank">Információ</a>
+    </td>
+    <td>
+      <button th:if="${alairas.megjegyzes}" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+              th:data-nev="${alairas.vezeteknev} + ' ' + ${alairas.utonev}" th:data-megjegyzes="${alairas.megjegyzes}">Megjegyzés</button>
     </td>
     <td class="fit">
-      <a class="btn btn-primary btn-sm" th:href="@{/szerkesztes/} + ${alairas.id}">Szerkesztés</a>
-      <a class="btn btn-danger btn-sm" th:href="@{/torles/} + ${alairas.id}"
+      <a class="btn btn-primary btn" th:href="@{/szerkesztes/} + ${alairas.id}">Szerkesztés</a>
+      <a class="btn btn-danger btn" th:href="@{/torles/} + ${alairas.id}"
          onclick="return confirm('Biztosan törlöd az aláírást?');">Törlés</a>
     </td>
   </tr>
@@ -52,10 +59,45 @@
        class="pagination col-auto"
        th:each="pageNumber : ${pageNumbers}">
         <a class="btn btn-primary font-weight-bold"
-           th:href="@{/(size=${alairasPage.size}, page=${pageNumber})}"
+           th:href="@{/tl(size=${alairasPage.size}, page=${pageNumber})}"
            th:text=${pageNumber}
            th:classappend="${pageNumber==alairasPage.number + 1} ? active"></a>
   </div>
 </div>
+
+
+
+<!--MODAL-->
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Bezárás</button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Megjegyzés</label>
+            <textarea class="form-control" id="message-text" disabled></textarea>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#exampleModal').on('show.bs.modal', function(event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var nev = button.data('nev'); // Extract info from data-* attributes
+    var megjegyzes = button.data('megjegyzes'); // Extract info from data-* attributes
+    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    var modal = $(this);
+    modal.find('.modal-title').text(nev);
+    modal.find('.modal-body textarea').val(megjegyzes);
+  });
+</script>
 </body>
 </html>

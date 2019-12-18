@@ -14,6 +14,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import lombok.Data;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 @Entity
 @Data
@@ -29,12 +30,14 @@ public class Alairas {
   @Column(nullable = false)
   private String vezeteknev;
 
-  @ManyToOne(fetch= FetchType.LAZY)
+  @ManyToOne
   @JoinColumn(name="UTONEV_ID", nullable = false)
+  @RestResource(exported = false)
   private Utonev utonev;
 
-  @ManyToOne(fetch= FetchType.LAZY)
+  @ManyToOne
   @JoinColumn(name="UTONEV_2_ID")
+  @RestResource(exported = false)
   private Utonev utonev_2;
 
   @Column(nullable = false)

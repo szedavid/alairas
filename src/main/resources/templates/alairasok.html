@@ -39,15 +39,15 @@
     <td class="fit"><span th:text="${alairas.utonev_2}"></span></td>
     <td class="fit"><input type="checkbox" th:checked="${alairas.nemeNo}" disabled></td>
     <td class="fit">
-      <a th:if="${alairas.infoLink}" class="btn btn-primary" th:href="${alairas.infoLink}" target="_blank">Információ</a>
+      <a th:if="${alairas.infoLink}" class="btn btn-info" th:href="${alairas.infoLink}" target="_blank">Információ</a>
     </td>
     <td>
       <button th:if="${alairas.megjegyzes}" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
               th:data-nev="${alairas.vezeteknev} + ' ' + ${alairas.utonev}" th:data-megjegyzes="${alairas.megjegyzes}">Megjegyzés</button>
     </td>
     <td class="fit">
-      <a class="btn btn-primary btn" th:href="@{/szerkesztes/} + ${alairas.id}">Szerkesztés</a>
-      <a class="btn btn-danger btn" th:href="@{/torles/} + ${alairas.id}"
+      <a class="btn btn-warning" th:href="@{/szerkesztes/} + ${alairas.id}">Szerkesztés</a>
+      <a class="btn btn-danger" th:href="@{/torles/} + ${alairas.id}"
          onclick="return confirm('Biztosan törlöd az aláírást?');">Törlés</a>
     </td>
   </tr>

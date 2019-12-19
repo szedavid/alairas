@@ -1,0 +1,92 @@
+<div class="row">
+  <div class="col-auto mr-auto"><h2>Aláírások adatai:</h2></div>
+  <div class="col-auto">
+    <a class="btn btn-success" href="/hozzaadas" role="button">Új aláírás hozzáadása</a>
+  </div>
+</div>
+
+<table class="table table-striped table-hover table-bordered">
+  <thead>
+  <tr>
+    <th>Vezetéknév</th>
+    <th>Keresztnév</th>
+    <th class="fit">2. keresztnév</th>
+    <th class="fit">Nő</th>
+    <th class="fit">Ki ő?</th>
+    <th class="fit">Megjegyzés</th>
+    <th class="fit">Műveletek</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngIf="!alairasok || alairasok.length == 0">
+    <td colspan="2"> Nincsenek aláírások</td>
+  </tr>
+  <tr *ngFor="let alairas of alairasok">
+
+<!--    bootstrap - [ngClass]="alairas.nemeNo ? table-danger"-->
+
+    <td>{{alairas.vezeteknev}}</td>
+    <td>{{alairas.utonev}}</td>
+    <td class="fit">{{alairas.utonev_2}}</td>
+    <td class="fit"><input type="checkbox" [checked]="[alairas.nemeNo]" disabled></td>
+    <td class="fit">
+      <a *ngIf="alairas.infoLink" class="btn btn-info" href="alairas.infoLink" target="_blank">Információ</a>
+    </td>
+    <td>
+      <button *ngIf="alairas.megjegyzes" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+              data-nev="${alairas.vezeteknev} + ' ' + ${alairas.utonev}" data-megjegyzes="${alairas.megjegyzes}">Megjegyzés</button>
+    </td>
+    <td class="fit">
+      <a class="btn btn-warning" href="@{/szerkesztes/} + ${alairas.id}">Szerkesztés</a>
+      <a class="btn btn-danger" href="@{/torles/} + ${alairas.id}"
+         onclick="return confirm('Biztosan törlöd az aláírást?');">Törlés</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<div class="row mr-auto">
+  <div class="col-auto"><h3>Oldalak:</h3></div>
+<!--  <div *ngIf="alairasok.length > 0"-->
+<!--       class="pagination col-auto"-->
+<!--       *ngFor="let pageNumber of pageNumbers}">-->
+<!--        <a class="btn btn-primary font-weight-bold"-->
+<!--           th:href="@{/tl(size=${alairasPage.size}, page=${pageNumber})}"-->
+<!--           th:text=${pageNumber}-->
+<!--           th:classappend="${pageNumber==alairasPage.number + 1} ? active"></a>-->
+<!--  </div>-->
+</div>
+
+
+
+<!--MODAL-->
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Bezárás</button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Megjegyzés</label>
+            <textarea class="form-control" id="message-text" disabled></textarea>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--<script>-->
+<!--  $('#exampleModal').on('show.bs.modal', function(event) {-->
+<!--    var button = $(event.relatedTarget); // Button that triggered the modal-->
+<!--    var nev = button.data('nev'); // Extract info from data-* attributes-->
+<!--    var megjegyzes = button.data('megjegyzes'); // Extract info from data-* attributes-->
+<!--    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).-->
+<!--    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.-->
+<!--    var modal = $(this);-->
+<!--    modal.find('.modal-title').text(nev);-->
+<!--    modal.find('.modal-body textarea').val(megjegyzes);-->
+<!--  });-->
+<!--</script>-->

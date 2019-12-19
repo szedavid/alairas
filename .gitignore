@@ -29,3 +29,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Angular FE ###
+/src/main/resources/frontend/node_modules

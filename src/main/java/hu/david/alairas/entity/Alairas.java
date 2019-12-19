@@ -54,7 +54,6 @@ public class Alairas {
   private Date letrehozva;
 
   @Temporal(TemporalType.DATE)
-  @Column
   private Date modositva;
 
   @Override

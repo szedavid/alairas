@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="col-auto mr-auto"><h2>Aláírások adatai:</h2></div>
+  <div class="col-auto">
+    <button class="btn btn-success" (click)="openCreateEditDialog(null)">Új aláírás hozzáadása</button>
+  </div>
+</div>
+
+<table class="table table-striped table-hover table-bordered">
+  <thead>
+  <tr>
+    <th>Vezetéknév</th>
+    <th>Keresztnév</th>
+    <th class="fit">2. keresztnév</th>
+    <th class="fit">Nő</th>
+    <th class="fit">Ki ő?</th>
+    <th class="fit">Megjegyzés</th>
+    <th class="fit">Műveletek</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngIf="!alairasok || alairasok.length == 0">
+    <td colspan="2"> Nincsenek aláírások</td>
+  </tr>
+  <tr *ngFor="let alairas of alairasok" [ngClass]="{'table-danger' : alairas.nemeNo}">
+
+    <td>{{alairas.vezeteknev}}</td>
+    <td>{{alairas.utonev.nev}}</td>
+    <td class="fit">{{alairas.utonev_2?.nev}}</td>
+    <td class="fit"><input type="checkbox" [checked]="[alairas.nemeNo]" disabled></td>
+    <td class="fit">
+      <a *ngIf="alairas.infoLink" class="btn btn-info" href="{{alairas.infoLink}}" target="_blank">Információ</a>
+    </td>
+    <td>
+      <button *ngIf="alairas.megjegyzes" class="btn btn-primary"
+              (click)="openModal(modalMegjegyzes, alairas)">Megjegyzés
+      </button>
+
+    </td>
+    <td class="fit">
+      <a class="btn btn-warning" href="@{/szerkesztes/} + ${alairas.id}">Szerkesztés</a>
+      <a class="btn btn-danger" (click)="openConfirmDialog(alairas.id)">Törlés</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<ul class="nav nav-pills">
+  <li class="col-auto"><h3>Oldalak:</h3></li>
+
+  <li *ngFor="let p of pages; let i=index" class="nav-item">
+        <a class="nav-link" href=""
+           (click)="setPage(i,$event)"
+           [ngClass]="{'active':i==page}">{{i + 1}}
+  </a>
+  </li>
+</ul>
+
+<ng-template #modalMegjegyzes>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{modalData.vezeteknev}} {{modalData.utonev.nev}}</h4>
+    <button type="button" class="close pull-right"
+            aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    {{modalData.megjegyzes}}
+  </div>
+</ng-template>
+

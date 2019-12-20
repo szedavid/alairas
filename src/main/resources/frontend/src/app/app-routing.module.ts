@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AlairasComponent } from './alairas/alairas.component';
+import { AlairasComponent } from './alairas/list/alairas.component';
 
 const routes: Routes = [
   {path: '', component: AlairasComponent}

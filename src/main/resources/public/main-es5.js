@@ -28,7 +28,18 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"row\">\n  <div class=\"col-auto mr-auto\"><h2>Aláírások adatai:</h2></div>\n  <div class=\"col-auto\">\n    <a class=\"btn btn-success\" href=\"/hozzaadas\" role=\"button\">Új aláírás hozzáadása</a>\n  </div>\n</div>\n\n<table class=\"table table-striped table-hover table-bordered\">\n  <thead>\n  <tr>\n    <th>Vezetéknév</th>\n    <th>Keresztnév</th>\n    <th class=\"fit\">2. keresztnév</th>\n    <th class=\"fit\">Nő</th>\n    <th class=\"fit\">Ki ő?</th>\n    <th class=\"fit\">Megjegyzés</th>\n    <th class=\"fit\">Műveletek</th>\n  </tr>\n  </thead>\n  <tbody>\n  <tr *ngIf=\"!alairasok || alairasok.length == 0\">\n    <td colspan=\"2\"> Nincsenek aláírások</td>\n  </tr>\n  <tr *ngFor=\"let alairas of alairasok\">\n\n<!--    bootstrap - [ngClass]=\"alairas.nemeNo ? table-danger\"-->\n\n    <td>{{alairas.vezeteknev}}</td>\n    <td>{{alairas.utonev}}</td>\n    <td class=\"fit\">{{alairas.utonev_2}}</td>\n    <td class=\"fit\"><input type=\"checkbox\" [checked]=\"[alairas.nemeNo]\" disabled></td>\n    <td class=\"fit\">\n      <a *ngIf=\"alairas.infoLink\" class=\"btn btn-info\" href=\"alairas.infoLink\" target=\"_blank\">Információ</a>\n    </td>\n    <td>\n      <button *ngIf=\"alairas.megjegyzes\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#exampleModal\"\n              data-nev=\"${alairas.vezeteknev} + ' ' + ${alairas.utonev}\" data-megjegyzes=\"${alairas.megjegyzes}\">Megjegyzés</button>\n    </td>\n    <td class=\"fit\">\n      <a class=\"btn btn-warning\" href=\"@{/szerkesztes/} + ${alairas.id}\">Szerkesztés</a>\n      <a class=\"btn btn-danger\" href=\"@{/torles/} + ${alairas.id}\"\n         onclick=\"return confirm('Biztosan törlöd az aláírást?');\">Törlés</a>\n    </td>\n  </tr>\n  </tbody>\n</table>\n<div class=\"row mr-auto\">\n  <div class=\"col-auto\"><h3>Oldalak:</h3></div>\n<!--  <div *ngIf=\"alairasok.length > 0\"-->\n<!--       class=\"pagination col-auto\"-->\n<!--       *ngFor=\"let pageNumber of pageNumbers}\">-->\n<!--        <a class=\"btn btn-primary font-weight-bold\"-->\n<!--           th:href=\"@{/tl(size=${alairasPage.size}, page=${pageNumber})}\"-->\n<!--           th:text=${pageNumber}-->\n<!--           th:classappend=\"${pageNumber==alairasPage.number + 1} ? active\"></a>-->\n<!--  </div>-->\n</div>\n\n\n\n<!--MODAL-->\n<div class=\"modal\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\"></h5>\n        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Bezárás</button>\n      </div>\n      <div class=\"modal-body\">\n        <form>\n          <div class=\"form-group\">\n            <label for=\"message-text\" class=\"col-form-label\">Megjegyzés</label>\n            <textarea class=\"form-control\" id=\"message-text\" disabled></textarea>\n          </div>\n        </form>\n      </div>\n    </div>\n  </div>\n</div>\n\n<!--<script>-->\n<!--  $('#exampleModal').on('show.bs.modal', function(event) {-->\n<!--    var button = $(event.relatedTarget); // Button that triggered the modal-->\n<!--    var nev = button.data('nev'); // Extract info from data-* attributes-->\n<!--    var megjegyzes = button.data('megjegyzes'); // Extract info from data-* attributes-->\n<!--    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).-->\n<!--    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.-->\n<!--    var modal = $(this);-->\n<!--    modal.find('.modal-title').text(nev);-->\n<!--    modal.find('.modal-body textarea').val(megjegyzes);-->\n<!--  });-->\n<!--</script>-->\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"row\">\n  <div class=\"col-auto mr-auto\"><h2>Aláírások adatai:</h2></div>\n  <div class=\"col-auto\">\n    <a class=\"btn btn-success\" href=\"/hozzaadas\" role=\"button\">Új aláírás hozzáadása</a>\n  </div>\n</div>\n\n<table class=\"table table-striped table-hover table-bordered\">\n  <thead>\n  <tr>\n    <th>Vezetéknév</th>\n    <th>Keresztnév</th>\n    <th class=\"fit\">2. keresztnév</th>\n    <th class=\"fit\">Nő</th>\n    <th class=\"fit\">Ki ő?</th>\n    <th class=\"fit\">Megjegyzés</th>\n    <th class=\"fit\">Műveletek</th>\n  </tr>\n  </thead>\n  <tbody>\n  <tr *ngIf=\"!alairasok || alairasok.length == 0\">\n    <td colspan=\"2\"> Nincsenek aláírások</td>\n  </tr>\n  <tr *ngFor=\"let alairas of alairasok\" [ngClass]=\"{'table-danger' : alairas.nemeNo}\">\n\n    <td>{{alairas.vezeteknev}}</td>\n    <td>{{alairas.utonev.nev}}</td>\n    <td class=\"fit\">{{alairas.utonev_2?.nev}}</td>\n    <td class=\"fit\"><input type=\"checkbox\" [checked]=\"[alairas.nemeNo]\" disabled></td>\n    <td class=\"fit\">\n      <a *ngIf=\"alairas.infoLink\" class=\"btn btn-info\" href=\"{{alairas.infoLink}}\" target=\"_blank\">Információ</a>\n    </td>\n    <td>\n      <button *ngIf=\"alairas.megjegyzes\" class=\"btn btn-primary\"\n              (click)=\"openModal(myModal, alairas)\">Megjegyzés\n      </button>\n\n      <!--              data-toggle=\"modal\"-->\n      <!--              data-target=\"#exampleModal\"-->\n      <!--              data-nev=\"${alairas.vezeteknev} + ' ' + ${alairas.utonev}\"-->\n      <!--              data-megjegyzes=\"${alairas.megjegyzes}\"-->\n\n\n    </td>\n    <td class=\"fit\">\n      <a class=\"btn btn-warning\" href=\"@{/szerkesztes/} + ${alairas.id}\">Szerkesztés</a>\n\n\n\n<!--      <a class=\"btn btn-danger\" href=\"@{/torles/} + ${alairas.id}\"-->\n      <!--         onclick=\"return confirm('Biztosan törlöd az aláírást?');\">Törlés</a>-->\n\n            <a class=\"btn btn-danger\" (click)=\"openConfirmDialog(alairas.id)\">Törlés</a>\n\n    </td>\n  </tr>\n  </tbody>\n</table>\n<ul class=\"nav nav-pills\">\n  <li class=\"col-auto\"><h3>Oldalak:</h3></li>\n\n  <li *ngFor=\"let p of pages; let i=index\" class=\"nav-item\">\n        <a class=\"nav-link\" href=\"\"\n           (click)=\"setPage(i,$event)\"\n           [ngClass]=\"{'active':i==page}\">{{i+1}}\n        </a>\n\n\n    <!--    th:classappend=\"${pageNumber==alairasPage.number + 1} ? active\"-->\n\n\n  </li>\n</ul>\n\n\n<!--MODAL-->\n<!--<div class=\"modal\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\"-->\n<!--     aria-hidden=\"true\">-->\n<!--  <div class=\"modal-dialog\" role=\"document\">-->\n<!--    <div class=\"modal-content\">-->\n<!--      <div class=\"modal-header\">-->\n<!--        <h5 class=\"modal-title\" id=\"exampleModalLabel\"></h5>-->\n<!--        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Bezárás</button>-->\n<!--      </div>-->\n<!--      <div class=\"modal-body\">-->\n<!--        <form>-->\n<!--          <div class=\"form-group\">-->\n<!--            <label for=\"message-text\" class=\"col-form-label\">Megjegyzés</label>-->\n<!--            <textarea class=\"form-control\" id=\"message-text\" disabled></textarea>-->\n<!--          </div>-->\n<!--        </form>-->\n<!--      </div>-->\n<!--    </div>-->\n<!--  </div>-->\n<!--</div>-->\n<ng-template #myModal>\n  <div class=\"modal-header\">\n    <h4 class=\"modal-title pull-left\">{{modalData.vezeteknev}} {{modalData.utonev.nev}}</h4>\n    <button type=\"button\" class=\"close pull-right\"\n            aria-label=\"Close\" (click)=\"modalRef.hide()\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <div class=\"modal-body\">\n    {{modalData.megjegyzes}}\n  </div>\n</ng-template>\n\n<!--<script>-->\n<!--  $('#exampleModal').on('show.bs.modal', function(event) {-->\n<!--    var button = $(event.relatedTarget); // Button that triggered the modal-->\n<!--    var nev = button.data('nev'); // Extract info from data-* attributes-->\n<!--    var megjegyzes = button.data('megjegyzes'); // Extract info from data-* attributes-->\n<!--    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).-->\n<!--    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.-->\n<!--    var modal = $(this);-->\n<!--    modal.find('.modal-title').text(nev);-->\n<!--    modal.find('.modal-body textarea').val(megjegyzes);-->\n<!--  });-->\n<!--</script>-->\n");
+            /***/ 
+        }),
+        /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/alairas/shared/confirm-dialog.component/confirm-dialog.component.html": 
+        /*!*****************************************************************************************************************************!*\
+          !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/alairas/shared/confirm-dialog.component/confirm-dialog.component.html ***!
+          \*****************************************************************************************************************************/
+        /*! exports provided: default */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"alert-box\">\r\n  <div class=\"modal-header\">\r\n    <h4 class=\"modal-title\">Megerősítés szükséges!</h4>\r\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"_bsModalRef.hide()\">\r\n      <span aria-hidden=\"true\">&times;</span>\r\n    </button>\r\n  </div>\r\n  <div class=\"modal-body\">\r\n    Biztosan törölni szeretné az elemet?\r\n  </div>\r\n  <div class=\"modal-footer\">\r\n    <button type=\"button\" class=\"btn btn-danger\" (click)=\"onConfirm()\">Igen</button>\r\n    <button type=\"button\" class=\"btn btn-secondary\" (click)=\"onCancel()\">Nem</button>\r\n  </div>\r\n</div>\r\n");
             /***/ 
         }),
         /***/ "./node_modules/tslib/tslib.es6.js": 
@@ -354,23 +365,67 @@
             /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
             /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
             /* harmony import */ var _alairas_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./alairas.service */ "./src/app/alairas/alairas.service.ts");
+            /* harmony import */ var ngx_bootstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ngx-bootstrap */ "./node_modules/ngx-bootstrap/esm5/ngx-bootstrap.js");
+            /* harmony import */ var _shared_confirm_dialog_component_confirm_dialog_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./shared/confirm-dialog.component/confirm-dialog.component */ "./src/app/alairas/shared/confirm-dialog.component/confirm-dialog.component.ts");
             var AlairasComponent = /** @class */ (function () {
-                function AlairasComponent(service) {
+                function AlairasComponent(service, modalService) {
                     this.service = service;
+                    this.modalService = modalService;
+                    this.page = 0;
                 }
+                // ngOnInit() {
+                //   this.service.getAll().subscribe(
+                //       (resp: HttpResponse<Alairas[]>) => {
+                //         this.alairasok = resp.body;
+                //       }, (error: HttpErrorResponse) => {
+                //
+                //         console.log('Lekérdezés sikertelen! ' + error.message);
+                //
+                //         // this.toastr.error('Lekérdezés sikertelen! ' + error.message);
+                //       });
+                // }
                 AlairasComponent.prototype.ngOnInit = function () {
+                    this.getAll();
+                };
+                AlairasComponent.prototype.getAll = function () {
                     var _this = this;
-                    this.service.getAll().subscribe(function (resp) {
-                        _this.alairasok = resp.body;
+                    this.service.getAll(this.page).subscribe(function (data) {
+                        console.log(data);
+                        _this.alairasok = data['_embedded'].alairasok;
+                        _this.pages = new Array(data['page'].totalPages);
                     }, function (error) {
                         console.log('Lekérdezés sikertelen! ' + error.message);
                         // this.toastr.error('Lekérdezés sikertelen! ' + error.message);
                     });
                 };
+                AlairasComponent.prototype.setPage = function (i, event) {
+                    event.preventDefault();
+                    this.page = i;
+                    this.getAll();
+                };
+                AlairasComponent.prototype.openModal = function (template, alairas) {
+                    this.modalRef = this.modalService.show(template);
+                    this.modalData = alairas;
+                };
+                AlairasComponent.prototype.openConfirmDialog = function (id) {
+                    var _this = this;
+                    this.modalRef = this.modalService.show(_shared_confirm_dialog_component_confirm_dialog_component__WEBPACK_IMPORTED_MODULE_4__["ConfirmDialogComponent"]);
+                    this.modalRef.content.onClose.subscribe(function (result) {
+                        if (result) {
+                            _this.service.deleteById(id).subscribe(function (data) {
+                                _this.getAll();
+                            }, function (error) {
+                                console.log('Törlés sikertelen! ' + error.message);
+                                // this.toastr.error('Törlés sikertelen! ' + error.message);
+                            });
+                        }
+                    });
+                };
                 return AlairasComponent;
             }());
             AlairasComponent.ctorParameters = function () { return [
-                { type: _alairas_service__WEBPACK_IMPORTED_MODULE_2__["AlairasService"] }
+                { type: _alairas_service__WEBPACK_IMPORTED_MODULE_2__["AlairasService"] },
+                { type: ngx_bootstrap__WEBPACK_IMPORTED_MODULE_3__["BsModalService"] }
             ]; };
             AlairasComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -399,13 +454,16 @@
                     this.http = http;
                     this.resourceUrl = _app_constants__WEBPACK_IMPORTED_MODULE_2__["SERVER_API_URL"] + '/alairasok';
                 }
-                AlairasService.prototype.getAll = function () {
-                    console.log('enaploAktasAvailableForHatosag()');
-                    return this.http.get("" + this.resourceUrl, { observe: 'response' });
+                // getAll(page: number): Observable<HttpResponse<Alairas[]>> {
+                AlairasService.prototype.getAll = function (page) {
+                    // return this.http.get<Alairas[]>(`${this.resourceUrl}?page=${page}`, { observe: 'response' });
+                    return this.http.get(this.resourceUrl + '?page=' + page);
                 };
                 AlairasService.prototype.getOneById = function (id) {
-                    console.log('enaploAktasAvailableForHatosag()');
-                    return this.http.get(this.resourceUrl + "/" + id, { observe: 'response' });
+                    return this.http.get(this.resourceUrl + '/' + id);
+                };
+                AlairasService.prototype.deleteById = function (id) {
+                    return this.http.delete(this.resourceUrl + '/' + id);
                 };
                 return AlairasService;
             }());
@@ -415,6 +473,47 @@
             AlairasService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])()
             ], AlairasService);
+            /***/ 
+        }),
+        /***/ "./src/app/alairas/shared/confirm-dialog.component/confirm-dialog.component.ts": 
+        /*!*************************************************************************************!*\
+          !*** ./src/app/alairas/shared/confirm-dialog.component/confirm-dialog.component.ts ***!
+          \*************************************************************************************/
+        /*! exports provided: ConfirmDialogComponent */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConfirmDialogComponent", function () { return ConfirmDialogComponent; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ngx-bootstrap/modal */ "./node_modules/ngx-bootstrap/modal/fesm2015/ngx-bootstrap-modal.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+            var ConfirmDialogComponent = /** @class */ (function () {
+                function ConfirmDialogComponent(_bsModalRef) {
+                    this._bsModalRef = _bsModalRef;
+                }
+                ConfirmDialogComponent.prototype.ngOnInit = function () {
+                    this.onClose = new rxjs__WEBPACK_IMPORTED_MODULE_3__["Subject"]();
+                };
+                ConfirmDialogComponent.prototype.onConfirm = function () {
+                    this.onClose.next(true);
+                    this._bsModalRef.hide();
+                };
+                ConfirmDialogComponent.prototype.onCancel = function () {
+                    this.onClose.next(false);
+                    this._bsModalRef.hide();
+                };
+                return ConfirmDialogComponent;
+            }());
+            ConfirmDialogComponent.ctorParameters = function () { return [
+                { type: ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_1__["BsModalRef"] }
+            ]; };
+            ConfirmDialogComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
+                    selector: 'app-confirm-dialog',
+                    template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./confirm-dialog.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/alairas/shared/confirm-dialog.component/confirm-dialog.component.html")).default
+                })
+            ], ConfirmDialogComponent);
             /***/ 
         }),
         /***/ "./src/app/app-routing.module.ts": 
@@ -504,6 +603,8 @@
             /* harmony import */ var _alairas_alairas_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./alairas/alairas.component */ "./src/app/alairas/alairas.component.ts");
             /* harmony import */ var _alairas_alairas_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./alairas/alairas.service */ "./src/app/alairas/alairas.service.ts");
             /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+            /* harmony import */ var ngx_bootstrap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ngx-bootstrap */ "./node_modules/ngx-bootstrap/esm5/ngx-bootstrap.js");
+            /* harmony import */ var _alairas_shared_confirm_dialog_component_confirm_dialog_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./alairas/shared/confirm-dialog.component/confirm-dialog.component */ "./src/app/alairas/shared/confirm-dialog.component/confirm-dialog.component.ts");
             var AppModule = /** @class */ (function () {
                 function AppModule() {
                 }
@@ -513,16 +614,20 @@
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
                     declarations: [
                         _app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"],
-                        _alairas_alairas_component__WEBPACK_IMPORTED_MODULE_6__["AlairasComponent"]
+                        _alairas_alairas_component__WEBPACK_IMPORTED_MODULE_6__["AlairasComponent"],
+                        _alairas_shared_confirm_dialog_component_confirm_dialog_component__WEBPACK_IMPORTED_MODULE_10__["ConfirmDialogComponent"]
                     ],
                     imports: [
                         _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
                         _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"],
                         _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"],
-                        _angular_common_http__WEBPACK_IMPORTED_MODULE_8__["HttpClientModule"]
+                        _angular_common_http__WEBPACK_IMPORTED_MODULE_8__["HttpClientModule"],
+                        ngx_bootstrap__WEBPACK_IMPORTED_MODULE_9__["ModalModule"].forRoot()
                     ],
                     providers: [_alairas_alairas_service__WEBPACK_IMPORTED_MODULE_7__["AlairasService"]],
-                    bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]]
+                    bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]],
+                    exports: [ngx_bootstrap__WEBPACK_IMPORTED_MODULE_9__["ModalModule"]],
+                    entryComponents: [_alairas_shared_confirm_dialog_component_confirm_dialog_component__WEBPACK_IMPORTED_MODULE_10__["ConfirmDialogComponent"]]
                 })
             ], AppModule);
             /***/ 

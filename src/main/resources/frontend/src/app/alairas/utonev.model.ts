@@ -3,8 +3,8 @@ export class Utonev {
 
   // @Size(max = 16)
   // @Column(nullable = false)
-  private nev: string;
+  nev: string;
 
   // @Column(nullable = false)
-  private nemeNo: boolean;
+  nemeNo: boolean;
 }

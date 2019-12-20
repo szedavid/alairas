@@ -11,13 +11,17 @@ export class AlairasService {
   constructor(protected http: HttpClient) {
   }
 
-  getAll(): Observable<HttpResponse<Alairas[]>> {
-    console.log('enaploAktasAvailableForHatosag()');
-    return this.http.get<Alairas[]>(`${this.resourceUrl}`, { observe: 'response' });
+  // getAll(page: number): Observable<HttpResponse<Alairas[]>> {
+  getAll(page: number) {
+    // return this.http.get<Alairas[]>(`${this.resourceUrl}?page=${page}`, { observe: 'response' });
+    return this.http.get(this.resourceUrl + '?page=' + page);
   }
 
-  getOneById(id: number): Observable<HttpResponse<Alairas>> {
-    console.log('enaploAktasAvailableForHatosag()');
-    return this.http.get<Alairas>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  getOneById(id: number) {
+    return this.http.get<Alairas>(this.resourceUrl + '/' + id);
+  }
+
+  deleteById(id: number) {
+    return this.http.delete(this.resourceUrl + '/' + id);
   }
 }

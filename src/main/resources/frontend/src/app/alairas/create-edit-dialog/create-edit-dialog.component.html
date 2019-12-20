@@ -1,0 +1,15 @@
+<div class="alert-box">
+  <div class="modal-header">
+    <h4 class="modal-title">Megerősítés szükséges!</h4>
+    <button type="button" class="close" aria-label="Close" (click)="_bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Biztosan törölni szeretné az elemet?
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="onConfirm()">Igen</button>
+    <button type="button" class="btn btn-secondary" (click)="onCancel()">Nem</button>
+  </div>
+</div>
